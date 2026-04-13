@@ -1,0 +1,35 @@
+{
+  "name": "cca-foundations-exam",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Free open-source mock exam for the Claude Certified Architect – Foundations (CCA) certification. 100 scenario-based questions, no API key required.",
+  "homepage": "https://YOUR_USERNAME.github.io/cca-foundations-exam/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/cca-foundations-exam"
+  },
+  "license": "MIT",
+  "keywords": ["claude", "anthropic", "cca", "certification", "mock-exam", "ai"],
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "vite": "^8.0.4"
+  }
+}
