@@ -1,4 +1,31 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
+
+// PWA install prompt hook
+function useInstallPrompt() {
+  const [prompt, setPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true); return;
+    }
+    const handler = (e) => { e.preventDefault(); setPrompt(e); };
+    window.addEventListener('beforeinstallprompt', handler);
+    window.addEventListener('appinstalled', () => setIsInstalled(true));
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const install = useCallback(async () => {
+    if (!prompt) return;
+    prompt.prompt();
+    const { outcome } = await prompt.userChoice;
+    if (outcome === 'accepted') setIsInstalled(true);
+    setPrompt(null);
+  }, [prompt]);
+
+  return { canInstall: !!prompt && !isInstalled, isInstalled, install };
+}
+
 
 const DOMAINS = [
   { id: "agentic", label: "Agentic Architecture & Orchestration", short: "Agentic", weight: 27, color: "#4AFFC4", icon: "⬡" },
@@ -765,6 +792,7 @@ export default function CCAExam() {
   const [timerOn, setTimerOn]       = useState(false);
   const [bookmark, setBookmark]     = useState(new Set());
   const [filterWrong, setFilterWrong] = useState(false);
+  const { canInstall, isInstalled, install } = useInstallPrompt();
 
   useEffect(() => {
     if (!timerOn) return;
@@ -931,7 +959,16 @@ export default function CCAExam() {
             <div key={k}><div style={{fontSize:9,color:"#3A3A5A",letterSpacing:"0.1em"}}>{k}</div><div style={{fontSize:16,fontWeight:700,color:"#4AFFC4",marginTop:2}}>{v}</div></div>
           ))}
         </div>
-        <button className="pbtn" onClick={startExam} disabled={cfg.domains.length===0}>START EXAM →</button>
+        <div style={{display:"flex",gap:10,alignItems:"center",flexWrap:"wrap"}}>
+          <button className="pbtn" onClick={startExam} disabled={cfg.domains.length===0}>START EXAM →</button>
+          {canInstall && (
+            <button className="gbtn" onClick={install} style={{display:"flex",alignItems:"center",gap:7,padding:"12px 18px"}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Install App
+            </button>
+          )}
+          {isInstalled && <span style={{fontSize:11,color:"#4AFFC4",opacity:0.7}}>✓ installed</span>}
+        </div>
       </div>
     </div>
   );

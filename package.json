@@ -9,7 +9,14 @@
     "url": "https://github.com/YOUR_USERNAME/cca-foundations-exam"
   },
   "license": "MIT",
-  "keywords": ["claude", "anthropic", "cca", "certification", "mock-exam", "ai"],
+  "keywords": [
+    "claude",
+    "anthropic",
+    "cca",
+    "certification",
+    "mock-exam",
+    "ai"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -30,6 +37,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
-    "vite": "^8.0.4"
+    "vite": "^8.0.4",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }
