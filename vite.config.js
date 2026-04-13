@@ -1,7 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: '/cca-foundations-exam-practice/',
-})
+  base: "/cca-foundations-exam-practice/",
+  test: {
+    globals: true,
+    environment: "happy-dom",
+    setupFiles: "./src/test/setup.js",
+  },
+});
